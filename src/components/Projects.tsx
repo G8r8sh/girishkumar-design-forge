@@ -66,18 +66,11 @@ const projects = [
                   ))}
                 </div>
 
-                {/* Action buttons */}
-                <div className="pt-4 flex gap-3">
+                {/* Action button */}
+                <div className="pt-4">
                   <Button 
                     variant="neon" 
-                    className="flex-1"
-                    onClick={() => window.open(project.figmaHref, '_blank')}
-                  >
-                    🎨 Live Demo
-                  </Button>
-                  <Button 
-                    variant="glass" 
-                    className="flex-1"
+                    className="w-full"
                     onClick={() => window.open(project.figmaHref, '_blank')}
                   >
                     🔗 Interact
