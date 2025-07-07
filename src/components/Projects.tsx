@@ -3,19 +3,19 @@ import mobileProject from "@/assets/mobile-project.jpg"
 import travelProject from "@/assets/travel-project.jpg"
 
 const Projects = () => {
-  const projects = [
+const projects = [
     {
       title: "📱 Mobile App Signup",
       description: "Developed a user-friendly signup process with location and custom name detection. Optimized onboarding for seamless interaction.",
       image: mobileProject,
-      href: "#",
+      figmaHref: "https://www.figma.com/proto/WghcmR1kH6ayjOBfsAAnbo/moblie-login-page?page-id=0%3A1&node-id=15-3&viewport=118%2C228%2C0.43&t=egpuOscLbnOWS9M3-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=15%3A3",
       tags: ["UI Design", "Mobile", "UX Research"]
     },
     {
       title: "🌍 Travel Website UI",
       description: "Clean, modern travel site with category filtering and smooth navigation. Focused on intuitive UX and visual appeal.",
       image: travelProject,
-      href: "#",
+      figmaHref: "https://www.figma.com/proto/BXTa8x58YMNg70A2zpwQos/travel-website?page-id=&node-id=2-2&starting-point-node-id=2%3A2&scaling=scale-down-width&content-scaling=fixed&t=8eekw3dky8W2oalW-1",
       tags: ["Web Design", "Travel", "Interface"]
     }
   ]
@@ -66,10 +66,21 @@ const Projects = () => {
                   ))}
                 </div>
 
-                {/* Action button */}
-                <div className="pt-4">
-                  <Button variant="neon" className="w-full">
-                    View Project
+                {/* Action buttons */}
+                <div className="pt-4 flex gap-3">
+                  <Button 
+                    variant="neon" 
+                    className="flex-1"
+                    onClick={() => window.open(project.figmaHref, '_blank')}
+                  >
+                    🎨 Live Demo
+                  </Button>
+                  <Button 
+                    variant="glass" 
+                    className="flex-1"
+                    onClick={() => window.open(project.figmaHref, '_blank')}
+                  >
+                    🔗 Interact
                   </Button>
                 </div>
               </div>
