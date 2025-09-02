@@ -15,14 +15,14 @@ const Skills = () => {
       color: "neon-purple"
     },
     {
-      title: "Adobe Photoshop",
-      description: "Visual editing & design",
+      title: "Canva",
+      description: "Quick design & templates",
       icon: Brush,
       color: "neon-pink"
     },
     {
-      title: "Adobe Illustrator",
-      description: "Vector graphics & branding",
+      title: "Photopea",
+      description: "Advanced photo editing",
       icon: Palette,
       color: "neon-cyan"
     },
