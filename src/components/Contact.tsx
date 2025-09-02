@@ -12,8 +12,21 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
-    console.log("Form submitted:", formData)
+    
+    // Create mailto link with form data
+    const subject = encodeURIComponent("Portfolio Contact Form")
+    const body = encodeURIComponent(`
+Name: ${formData.name}
+Email: ${formData.email}
+
+Message:
+${formData.message}
+    `)
+    
+    window.location.href = `mailto:ambalagirish55555@gmail.com?subject=${subject}&body=${body}`
+    
+    // Reset form
+    setFormData({ name: "", email: "", message: "" })
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

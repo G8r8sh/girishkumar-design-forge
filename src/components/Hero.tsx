@@ -42,10 +42,25 @@ const Hero = () => {
 
           {/* Action buttons */}
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in" style={{animationDelay: '1s'}}>
-            <Button variant="hero" size="lg" className="text-lg px-8 py-4">
+            <Button 
+              variant="hero" 
+              size="lg" 
+              className="text-lg px-8 py-4"
+              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+            >
               🔍 View Projects
             </Button>
-            <Button variant="glass" size="lg" className="text-lg px-8 py-4">
+            <Button 
+              variant="glass" 
+              size="lg" 
+              className="text-lg px-8 py-4"
+              onClick={() => {
+                const link = document.createElement('a');
+                link.href = '/resume.pdf';
+                link.download = 'Ambala_Girishkumar_Resume.pdf';
+                link.click();
+              }}
+            >
               📄 Download Resume
             </Button>
           </div>
