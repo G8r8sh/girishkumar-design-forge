@@ -2,6 +2,8 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { useToast } from "@/components/ui/use-toast"
+import { supabase, type ContactMessage } from "@/lib/supabase"
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -9,24 +11,55 @@ const Contact = () => {
     email: "",
     message: ""
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { toast } = useToast()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    // Create mailto link with form data
-    const subject = encodeURIComponent("Portfolio Contact Form")
-    const body = encodeURIComponent(`
-Name: ${formData.name}
-Email: ${formData.email}
+    if (!formData.name || !formData.email || !formData.message) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields.",
+        variant: "destructive"
+      })
+      return
+    }
 
-Message:
-${formData.message}
-    `)
-    
-    window.location.href = `mailto:ambalagirish55555@gmail.com?subject=${subject}&body=${body}`
-    
-    // Reset form
-    setFormData({ name: "", email: "", message: "" })
+    setIsSubmitting(true)
+
+    try {
+      const { error } = await supabase
+        .from('contact_messages')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            message: formData.message
+          }
+        ])
+
+      if (error) {
+        throw error
+      }
+
+      toast({
+        title: "Message Sent!",
+        description: "Thank you for your message. I'll get back to you soon!",
+      })
+
+      // Reset form
+      setFormData({ name: "", email: "", message: "" })
+    } catch (error) {
+      console.error('Error sending message:', error)
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again or contact me directly.",
+        variant: "destructive"
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -115,8 +148,8 @@ ${formData.message}
                 />
               </div>
 
-              <Button type="submit" variant="hero" className="w-full">
-                Send Message
+              <Button type="submit" variant="hero" className="w-full" disabled={isSubmitting}>
+                {isSubmitting ? "Sending..." : "Send Message"}
               </Button>
             </form>
           </div>
