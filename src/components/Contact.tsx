@@ -1,73 +1,4 @@
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { useToast } from "@/components/ui/use-toast"
-import { supabase, type ContactMessage } from "@/lib/supabase"
-
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: ""
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const { toast } = useToast()
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    if (!formData.name || !formData.email || !formData.message) {
-      toast({
-        title: "Error",
-        description: "Please fill in all required fields.",
-        variant: "destructive"
-      })
-      return
-    }
-
-    setIsSubmitting(true)
-
-    try {
-      const { error } = await supabase
-        .from('contact_messages')
-        .insert([
-          {
-            name: formData.name,
-            email: formData.email,
-            message: formData.message
-          }
-        ])
-
-      if (error) {
-        throw error
-      }
-
-      toast({
-        title: "Message Sent!",
-        description: "Thank you for your message. I'll get back to you soon!",
-      })
-
-      // Reset form
-      setFormData({ name: "", email: "", message: "" })
-    } catch (error) {
-      console.error('Error sending message:', error)
-      toast({
-        title: "Error",
-        description: "Failed to send message. Please try again or contact me directly.",
-        variant: "destructive"
-      })
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
 
   const contactInfo = [
     {
@@ -94,68 +25,9 @@ const Contact = () => {
           📬 Contact
         </h2>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <div className="card-glass animate-fade-in">
-            <h3 className="text-2xl font-semibold text-neon-cyan mb-6">
-              Let's Work Together
-            </h3>
-            <p className="text-muted-foreground mb-8">
-              I'm always open to new opportunities and collaborations.
-            </p>
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
-                  Name *
-                </label>
-                <Input
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="glass border-neon-cyan/30 focus:border-neon-cyan"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                  Email *
-                </label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="glass border-neon-cyan/30 focus:border-neon-cyan"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
-                  Message
-                </label>
-                <Textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={5}
-                  className="glass border-neon-cyan/30 focus:border-neon-cyan"
-                />
-              </div>
-
-              <Button type="submit" variant="hero" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? "Sending..." : "Send Message"}
-              </Button>
-            </form>
-          </div>
-
+        <div className="max-w-2xl mx-auto">
           {/* Contact Information */}
-          <div className="space-y-8 animate-fade-in" style={{animationDelay: '0.2s'}}>
+          <div className="space-y-8 animate-fade-in">
             <div className="card-glass">
               <h3 className="text-2xl font-semibold text-neon-purple mb-6">
                 Get In Touch
